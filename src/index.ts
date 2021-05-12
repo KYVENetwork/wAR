@@ -29,9 +29,9 @@ const arweaveServer = async (height?: number) => {
   const latestHeight = (await client.network.getInfo()).height;
   if (!height) height = latestHeight;
 
-  // only fetch mined transactions
+  // Check if there are new blocks.
   if (height !== latestHeight) {
-    // receive transaction which got send to the bridge
+    // Fetch all new mined deposits sent to the bridge.
     const txs = (await gql
       .search()
       .to(address)
@@ -41,8 +41,8 @@ const arweaveServer = async (height?: number) => {
       .only(["id", "quantity", "quantity.winston", "tags"])
       .findAll()) as GQLEdgeTransactionInterface[];
 
-    // for each transaction received, get the ETH wallet and
-    // execute a mint action against the ERC20 contract
+    // For each transaction received, get the ETH wallet and
+    // mint new $wAR tokens on the ERC20 contract.
     for (const { node } of txs) {
       const id = node.id;
       const userWallet = node.tags.find((tag) => tag.name === "Wallet");
@@ -66,8 +66,8 @@ const arweaveServer = async (height?: number) => {
 };
 
 const ethereumServer = () => {
-  // When a burn vote is emitted, create an Arweave transaction
-  // and send the amount of AR to the address specified in the Burn event
+  // Watch for a burn event to be emitted, and create an Arweave transaction
+  // that sends the amount of $wAR burned in $AR to the specified address.
   wAR.events.Burn().on("data", async (res: any) => {
     const values = res.returnValues;
 
