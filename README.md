@@ -31,12 +31,23 @@ Application: wAR - DEV
 Wallet: [YOUR_ETH_ADDRESS]
 ```
 
+## Keeping the bridge accountable
+
+To keep the bridge accountable, the provider can buy tokens
+from a PSC/DAO and need to stake them. For every swap the provider
+recieves fees. When the provider misbehaves, the staked tokens can be slashed
+by the DAO. When the amount of fees and $AR in the wallet exceeds the staked token values,
+the provider needs to buy more tokens.
+
+_Note: This process needs to be implemented_
+
 ## Roadmap
 
 - [x] Test on [Ganache](https://www.trufflesuite.com/ganache).
 - [ ] Test on [Rinkeby](https://www.rinkeby.io), etc.
 - [ ] Deploy on Ethereum mainnet.
 - [ ] Build a UI for easy usage.
+- [ ] Implement staking
 
 _Disclaimer: KYVE will not run the bridge. We are only providing the technical solution
 for $wAR._
