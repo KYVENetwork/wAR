@@ -31,7 +31,6 @@ const arweaveServer = async (height?: number) => {
 
   // only fetch mined transactions
   if (height !== latestHeight) {
-
     // receive transaction which got send to the bridge
     const txs = (await gql
       .search()
