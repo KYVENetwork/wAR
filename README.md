@@ -3,7 +3,14 @@
   <p align="center">Wrapped AR on Ethereum.</p>
 </p>
 
-## How it works
+## Overview
+
+$wAR is an ERC-20 token that maps one-to-one to $AR.
+
+This is enabled by a _custodian_, a (trusted) entity responsible for running a bridge between the networks. It holds $AR and is responsible for minting and burning the equivalent amount of $wAR. Users interacts with the bridge when depositing and withdrawing $AR.
+
+
+## How It Works
 
 ### $AR to $wAR
 
@@ -33,11 +40,11 @@ Wallet: [YOUR_ETH_ADDRESS]
 
 ## Keeping the bridge accountable
 
-To keep the bridge accountable, the provider can buy tokens
-from a PSC/DAO and needs to stake them. For every swap, the provider
-recieves fees. When the provider misbehaves, the staked tokens can be slashed
+To keep the bridge accountable, the custodian can buy tokens
+from a PSC/DAO and needs to stake them. For every swap, the custodian
+recieves fees. When the custodian misbehaves, the staked tokens can be slashed
 by the DAO. When the amount of fees and $AR in the wallet exceeds the staked token values,
-the provider needs to buy more tokens.
+the custodian needs to buy more tokens.
 
 _Note: This process needs to be implemented_
 
