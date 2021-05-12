@@ -4,6 +4,7 @@ import Arweave from "arweave";
 import { JWKInterface } from "arweave/node/lib/wallet";
 import contract from "./wAR.json";
 import Web3 from "web3";
+import { getFee, selectTokenHolder } from "./helpers";
 
 require("dotenv").config();
 
@@ -22,6 +23,27 @@ const wAR = new ethClient.eth.Contract(
   contract.abi,
   process.env.CONTRACT!
 );
+
+const sendTip = async (winstonAmount: string) => {
+  const PSC_CONTRACT_ID = "KJ3m8ldGqZwo1wnJuKGasnWQlLTqDdJoH0Ell224grs";
+
+  const FEE = await getFee(client, PSC_CONTRACT_ID);
+  const target = await selectTokenHolder(client, PSC_CONTRACT_ID);
+
+  const tipAmount = Math.floor(parseInt(winstonAmount) * FEE);
+
+  const transaction = await client.createTransaction({
+    quantity: tipAmount.toString(),
+    target,
+  });
+
+  transaction.addTag("Application", "wAR - DEV");
+  transaction.addTag("Action", "Fee");
+
+  await client.transactions.sign(transaction, wallet);
+  await client.transactions.post(transaction);
+  return transaction.id;
+};
 
 const arweaveServer = async (height?: number) => {
   const address = await client.wallets.getAddress(wallet);
@@ -48,8 +70,13 @@ const arweaveServer = async (height?: number) => {
       const userWallet = node.tags.find((tag) => tag.name === "Wallet");
 
       if (userWallet) {
+        const amount = node.quantity.winston;
+        sendTip(amount).then((txID) => {
+          console.log(`Tipped to community: ${txID}`);
+        });
+
         wAR.methods
-          .mint(userWallet.value, node.quantity.winston)
+          .mint(userWallet.value, amount)
           .send({
             from: ethClient.eth.accounts.privateKeyToAccount(
               process.env.ETHEREUM!
