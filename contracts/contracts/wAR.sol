@@ -7,23 +7,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract wAR is ERC20, Ownable {
 
-  // Burn event which will be picked up the bridge
+  // Event emitted on burn, which will be picked up by the bridge.
   event Burn(address sender, string wallet, uint256 amount);
 
   constructor() ERC20("Wrapped AR", "wAR") {}
 
-  // AR has 12 decimals
+  // $AR has 12 decimals.
   function decimals() public view virtual override returns (uint8) {
     return 12;
   }
 
-  // the owner of the contract can mint a specific amount of tokens an address
+  // Only the bridge, which is the owner, is allowed to mint $wAR.
   function mint(address to, uint256 amount) public onlyOwner {
     _mint(to, amount);
   }
 
-  // the owner can burn a specific amount of wAR from the sender
-  // and emit a Burn event
+  // Any holder can burn their $wAR tokens, which emits an event to the bridge.
   function burn(uint256 amount, string memory wallet) public {
     _burn(msg.sender, amount);
     emit Burn(msg.sender, string(wallet), amount);
