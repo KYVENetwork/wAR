@@ -22,7 +22,7 @@ Once the burn has mined, the bridge will pick it up and transfer the appropriate
 
 ## Interacting with the bridge
 
-To interact with the bridge you can either use the UI (WIP) or manually
+To interact with the bridge, you can either use the UI (WIP) or manually
 send a transaction to the wallet provided by the bridge. When sending an
 $AR transaction make sure to use the following tags:
 
@@ -34,7 +34,7 @@ Wallet: [YOUR_ETH_ADDRESS]
 ## Keeping the bridge accountable
 
 To keep the bridge accountable, the provider can buy tokens
-from a PSC/DAO and need to stake them. For every swap the provider
+from a PSC/DAO and needs to stake them. For every swap, the provider
 recieves fees. When the provider misbehaves, the staked tokens can be slashed
 by the DAO. When the amount of fees and $AR in the wallet exceeds the staked token values,
 the provider needs to buy more tokens.
