@@ -38,6 +38,24 @@ Application: wAR - DEV
 Wallet: [YOUR_ETH_ADDRESS]
 ```
 
+## Example Transactions
+
+1. The user deposits 0.01 $AR to the bridge Arweave wallet, specifying the target Ethereum wallet:
+<img width="800" alt="deposit-ar" src="https://user-images.githubusercontent.com/11312/118031554-4acfd700-b32c-11eb-96b1-b2cd9e7fbb5b.png">
+
+2. The bridge picks up the deposited $AR, and mints $wAR into the target Ethereum wallet:
+<img width="400" alt="mint-war" src="https://user-images.githubusercontent.com/11312/118031728-7a7edf00-b32c-11eb-8c2d-c7458e6f6ab5.png">
+
+3. The user makes some $wAR transaction on Ethereum; the reamining balance is now 0.005:
+<img width="400" alt="eth-transact" src="https://user-images.githubusercontent.com/11312/118032376-3c35ef80-b32d-11eb-98d9-83672a791699.png">
+
+4. The user calls the burn function on the wAR contract:
+<img width="800" alt="burn" src="https://user-images.githubusercontent.com/11312/118032752-a2227700-b32d-11eb-9c76-d3c0e287a32c.png">
+
+5. The bridge picks up the burn and releases $AR to the user:
+<img width="800" alt="receive-ar" src="https://user-images.githubusercontent.com/11312/118032650-87500280-b32d-11eb-825b-bb14f16cbd43.png">
+
+
 ## Keeping the bridge accountable
 
 To keep the bridge accountable, the custodian can buy tokens
