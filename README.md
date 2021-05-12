@@ -7,7 +7,7 @@
 
 $wAR is an ERC-20 token that maps one-to-one to $AR.
 
-This is enabled by a _custodian_, a (trusted) entity responsible for running a bridge between the networks. It holds $AR and is responsible for minting and burning the equivalent amount of $wAR. Users interacts with the bridge when depositing and withdrawing $AR.
+This is enabled by a _custodian_, a (trusted) entity responsible for running a bridge between the networks. It holds $AR and is responsible for minting and burning the equivalent amount of $wAR. Users interact with the bridge when depositing and withdrawing $AR.
 
 
 ## How It Works
