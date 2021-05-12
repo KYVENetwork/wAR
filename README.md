@@ -56,12 +56,14 @@ Wallet: [YOUR_ETH_ADDRESS]
 ## Keeping the bridge accountable
 
 To keep the bridge accountable, the custodian can buy tokens
-from a PSC/DAO and needs to stake them. For every swap, the custodian
-recieves fees. When the custodian misbehaves, the staked tokens can be slashed
-by the DAO. When the amount of fees and $AR in the wallet exceeds the staked token values,
-the custodian needs to buy more tokens.
+from a [PSC/DAO](https://community.xyz/#KJ3m8ldGqZwo1wnJuKGasnWQlLTqDdJoH0Ell224grs) and needs to stake them. 
+For every swap sent to the custodian, a fee is sent to community. When the custodian misbehaves, the staked tokens can be slashed
+by the community. When the amount of $AR in the wallet exceeds the staked token values,
+the custodian needs to buy more tokens to ensure accountability.
 
-_Note: This process needs to be implemented_
+This allows anyone to buy into the profit-streams of $wAR. The more $wAR
+a user has, the higher the chance for receiving the fee is. Everyone inside the community
+can vote on the size of the fee.
 
 ## Roadmap
 
@@ -69,7 +71,7 @@ _Note: This process needs to be implemented_
 - [ ] Test on [Rinkeby](https://www.rinkeby.io), etc.
 - [ ] Deploy on Ethereum mainnet.
 - [ ] Build a UI for easy usage.
-- [ ] Implement staking
+- [x] Implement staking
 
 _Disclaimer: KYVE will not run the bridge. We are only providing the technical solution
 for $wAR._
