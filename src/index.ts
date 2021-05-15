@@ -17,6 +17,9 @@ const client = new Arweave({
 });
 const gql = new ArDB(client);
 const ethClient = new Web3(process.env.PROVIDER!);
+const account = ethClient.eth.accounts.privateKeyToAccount(
+  process.env.ETHEREUM!
+);
 
 const wAR = new ethClient.eth.Contract(
   // @ts-ignore
@@ -63,6 +66,8 @@ const arweaveServer = async (height?: number) => {
       .only(["id", "quantity", "quantity.winston", "tags"])
       .findAll()) as GQLEdgeTransactionInterface[];
 
+    if (txs.length) console.log(`\nFetched ${txs.length} new deposits ...`);
+
     // For each transaction received, get the ETH wallet and
     // mint new $wAR tokens on the ERC20 contract.
     for (const { node } of txs) {
@@ -72,16 +77,21 @@ const arweaveServer = async (height?: number) => {
       if (userWallet) {
         const amount = node.quantity.winston;
         sendTip(amount).then((txID) => {
-          console.log(`Tipped to community: ${txID}`);
+          console.log(`\nTipped the community:\n  ${txID}.`);
         });
 
-        wAR.methods
-          .mint(userWallet.value, amount)
-          .send({
-            from: ethClient.eth.accounts.privateKeyToAccount(
-              process.env.ETHEREUM!
-            ).address,
-          })
+        const func = wAR.methods.mint(userWallet.value, amount);
+        const gas = await func.estimateGas({ from: account.address });
+        const data = func.encodeABI();
+
+        const res = await account.signTransaction({
+          to: process.env.CONTRACT!,
+          data,
+          gas,
+        });
+
+        ethClient.eth
+          .sendSignedTransaction(res.rawTransaction!)
           .on("transactionHash", (hash: string) =>
             console.log(`\nParsed deposit:\n  ${id}.\nSent tokens:\n  ${hash}.`)
           );
